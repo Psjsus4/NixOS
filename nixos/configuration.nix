@@ -15,6 +15,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
@@ -140,6 +141,14 @@
     packages = with pkgs; [
     #  thunderbird
     ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      # Import your home-manager configuration
+      darktar = import ../home-manager/home.nix;
+    };
   };
 
   # Install firefox.
