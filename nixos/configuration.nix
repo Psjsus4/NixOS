@@ -102,6 +102,18 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  
+  xdg.portal.enable = true;
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  hardware = {
+    opengl.enable = true;
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "it";
@@ -123,7 +135,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -139,7 +151,7 @@
     description = "DarkTar";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
+      inputs.home-manager.packages.${pkgs.system}.default
     ];
   };
 
@@ -152,7 +164,7 @@
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -160,6 +172,17 @@
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     tk
+
+    (waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      })
+    )
+
+    dunst
+    wofi
+    kitty
+    
+    #rofi-wayland
   #  wget
   ];
 
