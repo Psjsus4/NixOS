@@ -106,13 +106,24 @@
     enable = true;
     xwayland.enable = true;
   };
-  
-  xdg.portal.enable = true;
-  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  hardware = {
-    opengl.enable = true;
+  xdg = {
+   portal = {
+     extraPortals = with pkgs; [
+       #xdg-desktop-portal-gtk
+     ];
+    };
   };
+  
+   hardware = {
+   opengl =
+     {
+       enable = true;
+
+       driSupport = true;
+       driSupport32Bit = true;
+     };
+   };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -157,10 +168,8 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      # Import your home-manager configuration
-      darktar = import ../home-manager/home.nix;
-    };
+    useUserPackages = true;
+    useGlobalPkgs = true;
   };
 
   # Install firefox.
@@ -172,19 +181,20 @@
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     tk
-
+    firefox
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
       })
     )
-
+    dolphin
     dunst
     wofi
     kitty
-    
+    vscode 
     #rofi-wayland
   #  wget
   ];
+
 
   # Enable VMware Tools
   virtualisation.vmware.guest.enable = true;
