@@ -16,6 +16,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
+      inputs.stylix.nixosModules.stylix
     ];
 
   # Bootloader.
@@ -115,15 +116,9 @@
     };
   };
   
-   hardware = {
-   opengl =
-     {
-       enable = true;
-
-       driSupport = true;
-       driSupport32Bit = true;
-     };
-   };
+  hardware = {
+    graphics.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -170,6 +165,9 @@
     extraSpecialArgs = { inherit inputs outputs; };
     useUserPackages = true;
     useGlobalPkgs = true;
+    users = {
+      darktar = import ../home-manager/home.nix;
+    };
   };
 
   # Install firefox.
@@ -182,19 +180,45 @@
     git
     tk
     firefox
-    (waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      })
-    )
-    dolphin
-    dunst
-    wofi
+    #(waybar.overrideAttrs (oldAttrs: {
+    #  mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    #  })
+    #}
     kitty
-    vscode 
+    vscode
+    zsh
+    #dunst
+    #wofi
     #rofi-wayland
   #  wget
   ];
-
+  
+  # Stylix
+  stylix = {
+    enable = true;
+    image = ./dark-nature-sunset.jpg;
+    cursor = {
+      package = pkgs.phinger-cursors;
+      name = "phinger-cursors-dark";
+    };
+    fonts = {
+      emoji = {
+        package = pkgs.cascadia-code;
+        name = "Cascadia Code ";
+      };
+      sizes = {
+        terminal = 13;
+        applications = 11;
+      };
+    };
+    polarity = "dark";
+    opacity = {
+      desktop = 0.9;
+      terminal = 0.9;
+      applications = 0.9;
+      popups = 0.9;
+    };
+  };
 
   # Enable VMware Tools
   virtualisation.vmware.guest.enable = true;
