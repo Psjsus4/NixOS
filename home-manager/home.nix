@@ -86,6 +86,23 @@
     # EDITOR = "emacs";
   };
 
+  programs.kitty = {
+    enable = true;
+    shellIntegration.enableZshIntegration = true;
+  };
+
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    targets.kitty.enable = true;
+    targets.vscode.enable = true;
+    targets.neovim.enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    polarity = "dark";
+    opacity.terminal = 0.9;
+    opacity.applications = 0.9;
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

@@ -152,15 +152,18 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.darktar = {
-    isNormalUser = true;
-    description = "DarkTar";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      inputs.home-manager.packages.${pkgs.system}.default
-    ];
+  users = {
+    users.darktar = {
+      isNormalUser = true;
+      description = "DarkTar";
+      extraGroups = [ "networkmanager" "wheel" ];
+      packages = with pkgs; [
+        inputs.home-manager.packages.${pkgs.system}.default
+      ];
+    };
+    defaultUserShell = pkgs.zsh;
   };
-
+  
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     useUserPackages = true;
@@ -192,11 +195,12 @@
     #rofi-wayland
   #  wget
   ];
-  
+
   # Stylix
   stylix = {
     enable = true;
     image = ./dark-nature-sunset.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nebula.yaml";
     cursor = {
       package = pkgs.phinger-cursors;
       name = "phinger-cursors-dark";
@@ -204,7 +208,7 @@
     fonts = {
       emoji = {
         package = pkgs.cascadia-code;
-        name = "Cascadia Code ";
+        name = "Cascadia Code";
       };
       sizes = {
         terminal = 13;
@@ -215,10 +219,11 @@
     opacity = {
       desktop = 0.9;
       terminal = 0.9;
-      applications = 0.9;
       popups = 0.9;
     };
   };
+
+  programs.zsh.enable = true;
 
   # Enable VMware Tools
   virtualisation.vmware.guest.enable = true;
