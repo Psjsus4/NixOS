@@ -1,6 +1,6 @@
 version = 2
 final_space = true
-console_title_template = ' {{ .Folder }} :: {{if .Root}}Admin{{end}}'
+console_title_template = '{{if .Env.IN_NIX_SHELL}}nix-shell{{else}}{{.Shell}}{{end}} :: {{.Folder}}'
 terminal_background = 'p:t-background'
 
 [[blocks]]

@@ -49,3 +49,4 @@
     enableZshIntegration = true;
   };
 }
+
