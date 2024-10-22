@@ -1,0 +1,123 @@
+version = 2
+console_title_template = '{{ .Folder }}'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'os'
+    style = 'powerline'
+    leading_diamond = ''
+    trailing_diamond = '<transparent,#FEF5ED></>'
+    template = ' {{ if .WSL }}WSL at {{ end }}{{.Icon}}'
+    background = '#FEF5ED'
+    foreground = '#011627'
+
+    [blocks.segments.properties]
+      macos = ' '
+      ubuntu = ' '
+      windows = ' '
+
+  [[blocks.segments]]
+    type = 'shell'
+    style = 'diamond'
+    leading_diamond = ''
+    trailing_diamond = '<transparent,#FEF5ED></>'
+    template = ' {{ .Name }}'
+    background = '#FEF5ED'
+    foreground = '#011627'
+
+  [[blocks.segments]]
+    type = 'sysinfo'
+    style = 'diamond'
+    leading_diamond = ''
+    trailing_diamond = '<transparent,#516BEB></>'
+    template = ' MEM: {{ round .PhysicalPercentUsed .Precision }}% | {{ (div ((sub .PhysicalTotalMemory .PhysicalAvailableMemory)|float64) 1073741824.0) }}/{{ (div .PhysicalTotalMemory 1073741824.0) }}GB  '
+    background = '#516BEB'
+    foreground = '#ffffff'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'diamond'
+    leading_diamond = ''
+    trailing_diamond = ''
+    template = ' {{ .FormattedMs }} '
+    background = '#575656'
+    foreground = '#d6deeb'
+
+    [blocks.segments.properties]
+      style = 'roundrock'
+      threshold = 0.0
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'diamond'
+    leading_diamond = ''
+    trailing_diamond = ''
+    template = ' {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} '
+    background = '#17D7A0'
+    foreground = '#011627'
+
+    [blocks.segments.properties]
+      branch_icon = ' '
+      fetch_stash_count = true
+      fetch_status = true
+      fetch_upstream_icon = true
+      fetch_worktree_count = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    template = '╭─'
+
+  [[blocks.segments]]
+    type = 'time'
+    style = 'plain'
+    template = ' ♥ {{ .CurrentDate | date .Format }} |'
+
+    [blocks.segments.properties]
+      time_format = '15:04'
+
+  [[blocks.segments]]
+    type = 'root'
+    style = 'plain'
+    template = '  '
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    template = ' {{ .Path }} '
+
+    [blocks.segments.properties]
+      folder_icon = ' '
+      folder_separator_icon = '  '
+      home_icon = ' '
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'status'
+    style = 'plain'
+    template = '╰─ '
+
+    [blocks.segments.properties]
+      always_enabled = true
+
+[transient_prompt]
+  template = ' '
+  background = 'transparent'
+  foreground = '#FEF5ED'

@@ -32,7 +32,6 @@
     pwninit
     patchelf
     ropgadget
-    zsh
     eza
     bat
     cascadia-code
@@ -91,12 +90,6 @@
     shellIntegration.enableZshIntegration = true;
   };
 
-  programs.oh-my-posh = {
-    enable = true;
-    enableZshIntegration = true;
-    useTheme = "tokyonight_storm";
-  };
-
   stylix = {
     enable = true;
     autoEnable = false;
@@ -105,6 +98,10 @@
     targets.neovim.enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     polarity = "dark";
+    fonts.sizes = {
+      terminal = 13;
+      applications = 11;
+    };
     opacity.terminal = 0.9;
     opacity.applications = 0.9;
   };
