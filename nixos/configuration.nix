@@ -200,7 +200,7 @@
   stylix = {
     enable = true;
     image = ./dark-nature-sunset.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nebula.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
     cursor = {
       package = pkgs.phinger-cursors;
       name = "phinger-cursors-dark";

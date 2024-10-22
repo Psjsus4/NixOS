@@ -91,6 +91,12 @@
     shellIntegration.enableZshIntegration = true;
   };
 
+  programs.oh-my-posh = {
+    enable = true;
+    enableZshIntegration = true;
+    useTheme = "tokyonight_storm";
+  };
+
   stylix = {
     enable = true;
     autoEnable = false;
