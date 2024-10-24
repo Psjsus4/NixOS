@@ -49,6 +49,18 @@
     };
   };
 
+  system.autoUpgrade = {
+  enable = true;
+  flake = inputs.self.outPath;
+  flags = [
+    "--update-input"
+    "nixpkgs"
+    "--print-build-logs"
+  ];
+  dates = "06:00";
+  randomizedDelaySec = "45min";
+};
+
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
@@ -60,6 +72,12 @@
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
     };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than +5";
+    };
+    optimise.automatic = true;
     # Opinionated: disable channels
     channel.enable = false;
 
@@ -110,9 +128,9 @@
 
   xdg = {
    portal = {
-     extraPortals = with pkgs; [
+     #extraPortals = with pkgs; [
        #xdg-desktop-portal-gtk
-     ];
+     #];
     };
   };
   
@@ -189,6 +207,7 @@
     #}
     kitty
     vscode
+    nixd
     zsh
     #dunst
     #wofi
