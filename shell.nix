@@ -14,6 +14,6 @@ pkgs.mkShell {
   inputsFrom = [pkgs.pwntools];
 
   shellHook = ''
-    exec zsh"
+    exec zsh
   '';
 }
