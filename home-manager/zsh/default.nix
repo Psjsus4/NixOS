@@ -52,6 +52,7 @@
       tree = "eza --tree --icons";
       nix-shell = "nix-shell --command zsh";
       pwninit = "pwninit --template-path ~/.config/pwninit-tmpt.py --template-bin-name e";
+      gdb = "pwndbg";
     };
   };
 

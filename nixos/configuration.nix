@@ -202,6 +202,7 @@
     git
     tk
     firefox
+    ghidra
     #(waybar.overrideAttrs (oldAttrs: {
     #  mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     #  })
@@ -233,7 +234,7 @@
     fonts = {
       emoji = {
         package = pkgs.cascadia-code;
-        name = "Cascadia Code";
+        name = "Cascadia Code NF";
       };
       sizes = {
         terminal = 13;

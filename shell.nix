@@ -5,13 +5,13 @@ pkgs.mkShell {
       with python-pkgs; [
         # select Python packages here
         pwntools
-
+        angr
         #pandas
         #requests
       ]))
   ];
 
-  inputsFrom = [pkgs.pwntools];
+  inputsFrom = [pkgs.pwntools pkgs.radare2];
 
   shellHook = ''
     exec zsh
