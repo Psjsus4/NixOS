@@ -29,6 +29,7 @@
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
+    pkgs = nixpkgs.legacyPackages.${system};
     system = "x86_64-linux";
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
@@ -62,9 +63,7 @@
       };
     };
 
-    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
-      packages = [nixpkgs.legacyPackages.${system}.python3];
-    };
+    devShells.${system}.default = import ./shell.nix {inherit pkgs;};
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
