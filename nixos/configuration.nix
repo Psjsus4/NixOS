@@ -1,7 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   inputs,
   outputs,
@@ -9,15 +8,13 @@
   config,
   pkgs,
   ...
-}:
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
-      inputs.stylix.nixosModules.stylix
-    ];
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
+    inputs.stylix.nixosModules.stylix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -50,16 +47,16 @@
   };
 
   system.autoUpgrade = {
-  enable = true;
-  flake = inputs.self.outPath;
-  flags = [
-    "--update-input"
-    "nixpkgs"
-    "--print-build-logs"
-  ];
-  dates = "06:00";
-  randomizedDelaySec = "45min";
-};
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--print-build-logs"
+    ];
+    dates = "06:00";
+    randomizedDelaySec = "45min";
+  };
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
@@ -127,13 +124,13 @@
   };
 
   xdg = {
-   portal = {
-     #extraPortals = with pkgs; [
-       #xdg-desktop-portal-gtk
-     #];
+    portal = {
+      #extraPortals = with pkgs; [
+      #xdg-desktop-portal-gtk
+      #];
     };
   };
-  
+
   hardware = {
     graphics.enable = true;
   };
@@ -174,16 +171,16 @@
     users.darktar = {
       isNormalUser = true;
       description = "DarkTar";
-      extraGroups = [ "networkmanager" "wheel" ];
-      packages = with pkgs; [
+      extraGroups = ["networkmanager" "wheel"];
+      packages = [
         inputs.home-manager.packages.${pkgs.system}.default
       ];
     };
     defaultUserShell = pkgs.zsh;
   };
-  
+
   home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = {inherit inputs outputs;};
     useUserPackages = true;
     useGlobalPkgs = true;
     users = {
@@ -197,6 +194,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    nh
+    nix-output-monitor
+    nvd
+
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     tk
@@ -209,11 +210,16 @@
     vscode
     nixd
     zsh
+    alejandra
     #dunst
     #wofi
     #rofi-wayland
-  #  wget
+    #  wget
   ];
+
+  environment.sessionVariables = {
+    FLAKE = "/home/darktar/.config/nixos/";
+  };
 
   # Stylix
   stylix = {
@@ -246,7 +252,7 @@
 
   # Enable VMware Tools
   virtualisation.vmware.guest.enable = true;
-  services.xserver.videoDrivers = [ "vmware" ];
+  services.xserver.videoDrivers = ["vmware"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -283,5 +289,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
