@@ -17,13 +17,18 @@
   ];
 
   # Bootloader.
-  #boot.loader.systemd-boot.enable = true;
-  #boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-    efiSupport = true;
+  boot.loader = {
+    efi = {
+      #canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      devices = ["nodev"];
+      useOSProber = true;
+    };
   };
 
   nixpkgs = {
@@ -208,6 +213,7 @@
     tk
     firefox
     ghidra
+    gdb
     #(waybar.overrideAttrs (oldAttrs: {
     #  mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     #  })
@@ -256,9 +262,11 @@
 
   programs.zsh.enable = true;
 
+  programs.nix-ld.enable = true;
+
   # Enable VMware Tools
-  virtualisation.vmware.guest.enable = true;
-  services.xserver.videoDrivers = ["vmware"];
+  #virtualisation.vmware.guest.enable = true;
+  # services.xserver.videoDrivers = ["vmware"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

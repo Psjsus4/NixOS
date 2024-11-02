@@ -9,8 +9,8 @@
     profiles.darktar = {
       search = {
         force = true;
-        default = "Kagi";
-        privateDefault = "DuckDuckGo";
+        default = "DuckDuckGo";
+        #privateDefault = "DuckDuckGo";
         order = ["Kagi" "DuckDuckGo" "Google"];
         engines = {
           "Kagi" = {
@@ -22,7 +22,7 @@
       };
 
       extensions = with pkgs; [
-      #  ublock-origin
+        #  ublock-origin
         browserpass
       ];
 
@@ -33,19 +33,19 @@
         }
         {
           name = "wiki";
-          tags = [ "wiki" "nix" ];
+          tags = ["wiki" "nix"];
           url = "https://wiki.nixos.org/";
         }
-	{
-	  name = "training";
-	  tags = [ "ctf" ];
-	  url = "https://training.olicyber.it/";
-	}
-	{
-	  name = "home-manager";
-	  tags = [ "nix" ];
-	  url = "https://home-manager-options.extranix.com/";
-	}
+        {
+          name = "training";
+          tags = ["ctf"];
+          url = "https://training.olicyber.it/";
+        }
+        {
+          name = "home-manager";
+          tags = ["nix"];
+          url = "https://home-manager-options.extranix.com/";
+        }
       ];
 
       settings = {

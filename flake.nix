@@ -30,18 +30,23 @@
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
-    pkgs = nixpkgs.legacyPackages.${system};
-    pkgs-stable = nixpkgs-stable.legacyPackages.${system};
-    system = "x86_64-linux";
+    systems = [
+      "aarch64-linux"
+      "i686-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
-    packages = import ./pkgs nixpkgs.legacyPackages.${system};
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
@@ -65,7 +70,16 @@
       };
     };
 
-    devShells.${system}.default = import ./shell.nix {inherit pkgs pkgs-stable;};
+    devShells = forAllSystems (system: {
+      default = import ./shell.nix {
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      };
+      py = import ./shell.nix {
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+      };
+    });
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
