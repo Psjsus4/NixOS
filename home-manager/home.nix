@@ -33,10 +33,9 @@
     # pkgs.hello
     pwninit
     patchelf
-    ropgadget
     gdb
-    gef
     pwndbg
+    gef
     eza
     bat
     cascadia-code
@@ -92,6 +91,10 @@
 
   programs.kitty = {
     enable = true;
+    extraConfig = ''
+      allow_remote_control yes
+      enabled_layouts grid
+    '';
     shellIntegration.enableZshIntegration = true;
   };
 

@@ -17,13 +17,31 @@
   ];
 
   # Bootloader.
-  #boot.loader.systemd-boot.enable = true;
-  #boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-    efiSupport = true;
+  boot.loader = {
+    efi = {
+      efiSysMountPoint = "/boot";
+      canTouchEfiVariables = true;
+    };
+
+    grub = {
+      enable = true;
+
+      efiSupport = true;
+      devices = ["nodev"];
+
+      extraEntries = ''
+        menuentry "Windows 11" {
+          search --fs-uuid --no-floppy --set=root BE7F-92F6
+          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        }
+        menuentry "Reboot" {
+          reboot
+        }
+        menuentry "Poweroff" {
+          halt
+        }
+      '';
+    };
   };
 
   nixpkgs = {
@@ -130,9 +148,9 @@
 
   xdg = {
     portal = {
-      #extraPortals = with pkgs; [
-      #xdg-desktop-portal-gtk
-      #];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+      ];
     };
   };
 
@@ -216,6 +234,7 @@
     vscode
     nixd
     zsh
+    nix-ld
     alejandra
     #dunst
     #wofi
@@ -255,10 +274,11 @@
   };
 
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true;
 
   # Enable VMware Tools
-  virtualisation.vmware.guest.enable = true;
-  services.xserver.videoDrivers = ["vmware"];
+  #virtualisation.vmware.guest.enable = true;
+  #services.xserver.videoDrivers = ["vmware"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -51,7 +51,7 @@
       ls = "eza --icons";
       tree = "eza --tree --icons";
       nix-shell = "nix-shell --command zsh";
-      pwninit = "pwninit --template-path ~/.config/pwninit-tmpt.py --template-bin-name e";
+      pwninit = "pwninit --template-path $FLAKE/home-manager/pwninit/pwninit-tmpt.py --template-bin-name e";
       gdb = "pwndbg";
     };
   };
