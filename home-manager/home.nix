@@ -89,13 +89,21 @@
     # EDITOR = "emacs";
   };
 
-  programs.kitty = {
-    enable = true;
-    extraConfig = ''
-      allow_remote_control yes
-      enabled_layouts grid
-    '';
-    shellIntegration.enableZshIntegration = true;
+  programs = {
+    kitty = {
+      enable = true;
+      extraConfig = ''
+        allow_remote_control yes
+        enabled_layouts grid
+      '';
+      shellIntegration.enableZshIntegration = true;
+    };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+    home-manager.enable = true;
   };
 
   stylix = {
@@ -113,7 +121,4 @@
     opacity.terminal = 0.9;
     opacity.applications = 0.9;
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

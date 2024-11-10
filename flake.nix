@@ -19,6 +19,10 @@
     # Nix Stylix
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix your shell
+    nix-your-shell.url = "github:MercuryTechnologies/nix-your-shell";
+    nix-your-shell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -30,9 +34,9 @@
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
+    system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     pkgs-stable = nixpkgs-stable.legacyPackages.${system};
-    system = "x86_64-linux";
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
   in {

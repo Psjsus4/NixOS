@@ -3,11 +3,10 @@
   pkgs-stable ? import <nixpkgs-stable> {},
   ...
 }:
-pkgs.mkShell {
+pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
-        # select Python packages here
         pwntools
         pwndbg
         #pandas
@@ -16,10 +15,7 @@ pkgs.mkShell {
 
     (pkgs-stable.python3.withPackages (python-pkgs:
       with python-pkgs; [
-        # select Python packages hereexport NIX_LD="${pkgs.nix-ld}/bin/nix-ld"
         angr
-        #pandas
-        #requests
       ]))
     radare2
   ];
@@ -27,6 +23,6 @@ pkgs.mkShell {
   inputsFrom = with pkgs; [pwntools pwndbg radare2];
 
   shellHook = ''
-    exec zsh
+    export NIX_LD="${pkgs.nix-ld}/bin/nix-ld"
   '';
 }
