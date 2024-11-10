@@ -33,7 +33,7 @@ def conn():
     if len(argv) > 1:
         if argv[1] == "gdb":
             r = gdb.debug([{bin_name}.path], gdbscript=gdbscript)
-        else :
+        else:
             ip, port = argv[1], argv[2]
             r = remote(ip, port)
     else:
