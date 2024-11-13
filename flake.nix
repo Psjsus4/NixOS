@@ -64,14 +64,14 @@
     };
 
     devShells.${system} = {
-      default = import ./pwn-shell.nix {inherit pkgs pkgs-stable;};
-      pwn = import ./pwn-shell.nix {inherit pkgs pkgs-stable;};
-      rev = import ./rev-shell.nix {inherit pkgs pkgs-stable;};
-      osint = import ./osint-shell.nix {inherit pkgs pkgs-stable;};
-      crypto = import ./crypto-shell.nix {inherit pkgs pkgs-stable;};
-      web = import ./web-shell.nix {inherit pkgs pkgs-stable;};
-      forensics = import ./forensics-shell.nix {inherit pkgs pkgs-stable;};
-      blockchain = import ./blockchain-shell.nix {inherit pkgs pkgs-stable;};
+      default = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
+      pwn = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
+      rev = import ./shell-rev.nix {inherit pkgs pkgs-stable;};
+      osint = import ./shell-osint.nix {inherit pkgs pkgs-stable;};
+      crypto = import ./shell-crypto.nix {inherit pkgs pkgs-stable;};
+      web = import ./shell-web.nix {inherit pkgs pkgs-stable;};
+      forensics = import ./shell-forensics.nix {inherit pkgs pkgs-stable;};
+      blockchain = import ./shell-blockchain.nix {inherit pkgs pkgs-stable;};
     };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
