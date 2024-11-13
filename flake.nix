@@ -3,18 +3,12 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Hyprland
-    #hyprland.url = "github:hyprwm/Hyprland";
 
     # Nix Stylix
     stylix.url = "github:danth/stylix";
@@ -69,8 +63,16 @@
       };
     };
 
-    devShells.${system}.default = import ./shell.nix {inherit pkgs pkgs-stable;};
-
+    devShells.${system} = {
+      default = import ./pwn-shell.nix {inherit pkgs pkgs-stable;};
+      pwn = import ./pwn-shell.nix {inherit pkgs pkgs-stable;};
+      rev = import ./rev-shell.nix {inherit pkgs pkgs-stable;};
+      osint = import ./osint-shell.nix {inherit pkgs pkgs-stable;};
+      crypto = import ./crypto-shell.nix {inherit pkgs pkgs-stable;};
+      web = import ./web-shell.nix {inherit pkgs pkgs-stable;};
+      forensics = import ./forensics-shell.nix {inherit pkgs pkgs-stable;};
+      blockchain = import ./blockchain-shell.nix {inherit pkgs pkgs-stable;};
+    };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     #homeConfigurations = {

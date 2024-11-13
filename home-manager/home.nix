@@ -1,12 +1,13 @@
 {
-  config,
+  #config,
   pkgs,
-  lib,
+  #lib,
   ...
 }: {
   imports = [
     ./browser/firefox.nix
     ./zsh
+    ./wayland
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
