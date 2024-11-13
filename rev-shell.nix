@@ -8,7 +8,7 @@ pkgs.mkShellNoCC {
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
-        pwndbg
+        gef
         #pandas
         #requests
       ]))
@@ -20,5 +20,5 @@ pkgs.mkShellNoCC {
     radare2
   ];
 
-  inputsFrom = with pkgs; [pwntools pwndbg radare2 angr];
+  inputsFrom = with pkgs; [pwntools gef radare2 angr];
 }

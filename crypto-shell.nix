@@ -8,17 +8,16 @@ pkgs.mkShellNoCC {
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
-        pwndbg
+        pycryptodome
         #pandas
         #requests
       ]))
 
     (pkgs-stable.python3.withPackages (python-pkgs:
       with python-pkgs; [
-        angr
+        #something
       ]))
-    radare2
   ];
 
-  inputsFrom = with pkgs; [pwntools pwndbg radare2 angr];
+  inputsFrom = with pkgs; [pwntools pycryptodome];
 }
