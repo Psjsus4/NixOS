@@ -20,5 +20,5 @@ pkgs.mkShellNoCC {
     radare2
   ];
 
-  inputsFrom = with pkgs; [pwntools pwndbg radare2 angr];
+  inputsFrom = with pkgs; [pwndbg angr];
 }

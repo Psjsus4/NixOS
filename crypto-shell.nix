@@ -19,5 +19,5 @@ pkgs.mkShellNoCC {
       ]))
   ];
 
-  inputsFrom = with pkgs; [pwntools pycryptodome];
+  inputsFrom = with pkgs; [pycryptodome];
 }
