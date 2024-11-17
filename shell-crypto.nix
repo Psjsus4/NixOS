@@ -18,7 +18,8 @@ pkgs.mkShellNoCC {
         #something
       ]))
     john
+    crunch
   ];
 
-  inputsFrom = with pkgs; [john];
+  inputsFrom = with pkgs; [john crunch];
 }
