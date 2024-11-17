@@ -9,13 +9,21 @@ pkgs.mkShellNoCC {
       with python-pkgs; [
         #pandas
         #requests
+        pyngrok
+        beautifulsoup4
       ]))
 
     (pkgs-stable.python3.withPackages (python-pkgs:
       with python-pkgs; [
         #something
       ]))
+
+    ngrok
+
+    commix
+
+    sqlmap
   ];
 
-  inputsFrom = with pkgs; []; #[something];
+  inputsFrom = with pkgs; [ngrok sqlmap]; #[something];
 }

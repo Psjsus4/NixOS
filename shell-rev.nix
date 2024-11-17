@@ -5,6 +5,8 @@
 }:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
+    clang
+    libgcc
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
@@ -20,5 +22,5 @@ pkgs.mkShellNoCC {
     radare2
   ];
 
-  inputsFrom = with pkgs; [gef angr];
+  inputsFrom = with pkgs; [libgcc gef];
 }

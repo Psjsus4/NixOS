@@ -9,13 +9,17 @@ pkgs.mkShellNoCC {
       with python-pkgs; [
         #pandas
         #requests
+        pyshark
+        binwalk-full
       ]))
 
     (pkgs-stable.python3.withPackages (python-pkgs:
       with python-pkgs; [
         #something
       ]))
+    tshark
+    dislocker
   ];
 
-  inputsFrom = with pkgs; []; #[something];
+  inputsFrom = with pkgs; [wireshark]; #[something];
 }

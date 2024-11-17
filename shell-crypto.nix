@@ -17,7 +17,8 @@ pkgs.mkShellNoCC {
       with python-pkgs; [
         #something
       ]))
+    john
   ];
 
-  inputsFrom = with pkgs; [pycryptodome];
+  inputsFrom = with pkgs; [john];
 }

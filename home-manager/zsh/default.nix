@@ -28,19 +28,18 @@
       bindkey "^H" backward-kill-word                 # Key Ctrl + H
 
       eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./zen.toml})"
-      
+
       dev() {
         if [[ "$1" == "clear" ]]; then
             if [[ -n "$IN_NIX_SHELL" && -n "$DIRENV_DIR" ]]; then
                 direnv_dir=$(printf '%s' "$DIRENV_DIR" | sed 's/^-//')
-                direnv deny
-                exec zsh
                 rm -rf $direnv_dir/.direnv
-                rm $direnv_dir/.envrc
+                echo "" > $direnv_dir/.envrc
+                direnv deny
             else
                 echo "\033[0;31mnot in direnv"
                 return 1
-            fi        
+            fi
         else
             if [[ $# -gt 0 ]]; then
                 shift

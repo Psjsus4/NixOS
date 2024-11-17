@@ -1,20 +1,8 @@
-{
-  pkgs ? import <nixpkgs> {},
-  pkgs-stable ? import <nixpkgs-stable> {},
-  ...
-}:
+{pkgs ? import <nixpkgs> {}, ...}:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
-    (python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        #pandas
-        #requests
-      ]))
-
-    (pkgs-stable.python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        #something
-      ]))
+    checkpwn
+    h8mail
   ];
 
   inputsFrom = with pkgs; []; #[something];

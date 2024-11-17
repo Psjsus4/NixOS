@@ -188,7 +188,7 @@
     users.darktar = {
       isNormalUser = true;
       description = "DarkTar";
-      extraGroups = ["networkmanager" "wheel"];
+      extraGroups = ["networkmanager" "wheel" "wireshark" "docker"];
       packages = [
         inputs.home-manager.packages.${pkgs.system}.default
       ];
@@ -220,6 +220,8 @@
     tk
     firefox
     ghidra
+    burpsuite
+    wireshark
     (
       waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
@@ -272,6 +274,14 @@
 
   programs.zsh.enable = true;
   programs.nix-ld.enable = true;
+  programs.wireshark.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # Enable VMware Tools
   #virtualisation.vmware.guest.enable = true;
