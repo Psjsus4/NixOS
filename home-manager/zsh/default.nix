@@ -16,7 +16,6 @@
 
   programs.zsh = {
     enable = true;
-
     dotDir = ".config/zsh";
 
     enableCompletion = true;
@@ -27,19 +26,54 @@
       bindkey "^[[1;3C" forward-word                  # Key Alt + Right
       bindkey "^[[1;3D" backward-word                 # Key Alt + Left
       bindkey "^H" backward-kill-word                 # Key Ctrl + H
+
       eval "$(${pkgs.oh-my-posh}/bin/oh-my-posh init zsh --config ${./zen.toml})"
+
+      dev() {
+        if [[ "$1" == "clear" ]]; then
+            if [[ -n "$IN_NIX_SHELL" && -n "$DIRENV_DIR" ]]; then
+                direnv_dir=$(printf '%s' "$DIRENV_DIR" | sed 's/^-//')
+                rm -rf $direnv_dir/.direnv
+                echo "" > $direnv_dir/.envrc
+                direnv deny
+            else
+                echo "\033[0;31mnot in direnv"
+                return 1
+            fi
+        else
+            if [[ $# -gt 0 ]]; then
+                shift
+                if [[ -n "$1" ]]; then
+                    echo "use flake $FLAKE#$1" > .envrc
+                else
+                    echo "use flake $FLAKE" > .envrc
+                fi
+            else
+                echo "use flake $FLAKE" > .envrc
+            fi
+            direnv allow
+        fi
+      }
+
+
+      if command -v nix-your-shell > /dev/null; then
+        nix-your-shell zsh | source /dev/stdin
+      fi
+
       nix() {
         if [[ "$1" == "dev" ]]; then
           shift
           if [[ -n "$1" ]]; then
-            nix develop "$FLAKE#$1"
+              # Use the first argument with nix develop
+              nix-your-shell  zsh nix develop $FLAKE#$1
           else
-            nix develop "$FLAKE"
+              nix-your-shell  zsh nix develop $FLAKE
           fi
         else
-          command nix "$@"
+          command nix-your-shell  zsh nix $@
         fi
       }
+
     '';
 
     shellAliases = {
@@ -50,7 +84,6 @@
       vim = "nvim";
       ls = "eza --icons";
       tree = "eza --tree --icons";
-      nix-shell = "nix-shell --command zsh";
       pwninit = "pwninit --template-path $FLAKE/home-manager/pwninit/pwninit-tmpt.py --template-bin-name e";
       gdb = "pwndbg";
     };

@@ -1,12 +1,13 @@
 {
-  config,
+  #config,
   pkgs,
-  lib,
+  #lib,
   ...
 }: {
   imports = [
     ./browser/firefox.nix
     ./zsh
+    ./wayland
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -39,6 +40,8 @@
     eza
     bat
     cascadia-code
+    #libnotify
+    #firefox
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -87,13 +90,21 @@
     # EDITOR = "emacs";
   };
 
-  programs.kitty = {
-    enable = true;
-    extraConfig = ''
-      allow_remote_control yes
-      enabled_layouts grid
-    '';
-    shellIntegration.enableZshIntegration = true;
+  programs = {
+    kitty = {
+      enable = true;
+      extraConfig = ''
+        allow_remote_control yes
+        enabled_layouts grid
+      '';
+      shellIntegration.enableZshIntegration = true;
+    };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+    home-manager.enable = true;
   };
 
   stylix = {
@@ -111,7 +122,4 @@
     opacity.terminal = 0.9;
     opacity.applications = 0.9;
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

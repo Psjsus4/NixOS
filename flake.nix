@@ -3,22 +3,20 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Hyprland
-    #hyprland.url = "github:hyprwm/Hyprland";
-
     # Nix Stylix
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix your shell
+    nix-your-shell.url = "github:MercuryTechnologies/nix-your-shell";
+    nix-your-shell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -30,23 +28,18 @@
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    packages = import ./pkgs nixpkgs.legacyPackages.${system};
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = nixpkgs.legacyPackages.${system}.alejandra;
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
@@ -70,17 +63,16 @@
       };
     };
 
-    devShells = forAllSystems (system: {
-      default = import ./shell.nix {
-        pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-stable = nixpkgs-stable.legacyPackages.${system};
-      };
-      py = import ./shell.nix {
-        pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-stable = nixpkgs-stable.legacyPackages.${system};
-      };
-    });
-
+    devShells.${system} = {
+      default = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
+      pwn = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
+      rev = import ./shell-rev.nix {inherit pkgs pkgs-stable;};
+      osint = import ./shell-osint.nix {inherit pkgs pkgs-stable;};
+      crypto = import ./shell-crypto.nix {inherit pkgs pkgs-stable;};
+      web = import ./shell-web.nix {inherit pkgs pkgs-stable;};
+      forensics = import ./shell-forensics.nix {inherit pkgs pkgs-stable;};
+      blockchain = import ./shell-blockchain.nix {inherit pkgs pkgs-stable;};
+    };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     #homeConfigurations = {

@@ -10,6 +10,14 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    nixpkgs.overlays = [
+      (self: super: {
+        openssh = super.openssh.override {
+          hpnSupport = true;
+          kerberos = self.libkrb5;
+        };
+      })
+    ];
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

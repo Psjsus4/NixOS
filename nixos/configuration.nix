@@ -34,20 +34,10 @@
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      inputs.nix-your-shell.overlays.default
     ];
     # Configure your nixpkgs instance
     config = {
@@ -74,11 +64,13 @@
     settings = {
       # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
+      warn-dirty = false;
       # Opinionated: disable global registry
       flake-registry = "";
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
     };
+
     gc = {
       automatic = true;
       dates = "weekly";
@@ -135,9 +127,9 @@
 
   xdg = {
     portal = {
-      #extraPortals = with pkgs; [
-      #xdg-desktop-portal-gtk
-      #];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+      ];
     };
   };
 
@@ -173,15 +165,12 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     users.darktar = {
       isNormalUser = true;
       description = "DarkTar";
-      extraGroups = ["networkmanager" "wheel"];
+      extraGroups = ["networkmanager" "wheel" "wireshark" "docker"];
       packages = [
         inputs.home-manager.packages.${pkgs.system}.default
       ];
@@ -208,23 +197,28 @@
     nix-output-monitor
     nvd
 
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
     git
     tk
     firefox
     ghidra
-    gdb
-    #(waybar.overrideAttrs (oldAttrs: {
-    #  mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    #  })
-    #}
+    burpsuite
+    wireshark
+    (
+      waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
     kitty
     vscode
     nixd
     zsh
+    nix-your-shell
+    nix-ld
     alejandra
-    #dunst
-    #wofi
+    dunst
+    swww
+    wofi
     #rofi-wayland
     #  wget
   ];
@@ -261,12 +255,19 @@
   };
 
   programs.zsh.enable = true;
-
   programs.nix-ld.enable = true;
+  programs.wireshark.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # Enable VMware Tools
   #virtualisation.vmware.guest.enable = true;
-  # services.xserver.videoDrivers = ["vmware"];
+  #services.xserver.videoDrivers = ["vmware"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
