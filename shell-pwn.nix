@@ -6,7 +6,6 @@
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     clang
-
     libgcc
 
     (python3.withPackages (python-pkgs:
@@ -15,6 +14,7 @@ pkgs.mkShellNoCC {
         pwndbg
         docker
         ropper
+        (callPackage (import ./pkgs/getlibs) {})
       ]))
 
     (pkgs-stable.python3.withPackages (python-pkgs:

@@ -34,15 +34,12 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
   in {
-    # Your custom packages
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = import ./pkgs nixpkgs.legacyPackages.${system};
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter = pkgs.alejandra;
 
     # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
+    overlays = import ./overlays {inherit inputs outputs;};
     # Reusable nixos modules you might want to export
     # These are usually stuff you would upstream into nixpkgs
     nixosModules = import ./modules/nixos;
@@ -67,11 +64,11 @@
       default = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
       pwn = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
       rev = import ./shell-rev.nix {inherit pkgs pkgs-stable;};
-      osint = import ./shell-osint.nix {inherit pkgs pkgs-stable;};
-      crypto = import ./shell-crypto.nix {inherit pkgs pkgs-stable;};
-      web = import ./shell-web.nix {inherit pkgs pkgs-stable;};
-      forensics = import ./shell-forensics.nix {inherit pkgs pkgs-stable;};
-      blockchain = import ./shell-blockchain.nix {inherit pkgs pkgs-stable;};
+      osint = import ./shell-osint.nix {inherit pkgs;};
+      crypto = import ./shell-crypto.nix {inherit pkgs;};
+      web = import ./shell-web.nix {inherit pkgs;};
+      forensics = import ./shell-forensics.nix {inherit pkgs;};
+      blockchain = import ./shell-blockchain.nix {inherit pkgs;};
     };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'

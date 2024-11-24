@@ -1,8 +1,4 @@
-{
-  pkgs ? import <nixpkgs> {},
-  pkgs-stable ? import <nixpkgs-stable> {},
-  ...
-}:
+{pkgs ? import <nixpkgs> {}, ...}:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (python-pkgs:
@@ -11,11 +7,6 @@ pkgs.mkShellNoCC {
         #requests
         pyngrok
         beautifulsoup4
-      ]))
-
-    (pkgs-stable.python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        #something
       ]))
 
     ngrok

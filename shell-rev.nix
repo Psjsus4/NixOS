@@ -11,6 +11,7 @@ pkgs.mkShellNoCC {
       with python-pkgs; [
         pwntools
         gef
+        (callPackage (import ./pkgs/getlibs) {})
         #pandas
         #requests
       ]))

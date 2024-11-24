@@ -44,17 +44,17 @@
     };
   };
 
-  services.fprintd.enable = true;
+  #services.fprintd.enable = true;
 
-  security.pam.services.swaylock = {};
-  security.pam.services.swaylock.fprintAuth = false;
+  #security.pam.services.swaylock = {};
+  #security.pam.services.swaylock.fprintAuth = false;
 
   nixpkgs = {
     # You can add overlays here
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.stable-packages
+      outputs.overlays.stable
       inputs.nix-your-shell.overlays.default
     ];
     # Configure your nixpkgs instance
@@ -151,10 +151,6 @@
     };
   };
 
-  hardware = {
-    graphics.enable = true;
-  };
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "it";
@@ -168,15 +164,20 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+
+  hardware = {
+    graphics.enable = true;
+    pulseaudio.enable = false;
+  };
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
+    #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -214,7 +215,6 @@
     nh
     nix-output-monitor
     nvd
-
     neovim
     git
     tk
