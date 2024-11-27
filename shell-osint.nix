@@ -5,5 +5,5 @@ pkgs.mkShellNoCC {
     h8mail
   ];
 
-  inputsFrom = with pkgs; []; #[something];
+  #inputsFrom = with pkgs; []; #[something];
 }
