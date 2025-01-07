@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!python
 
 from pwn import *
 import pwn
@@ -7,7 +7,7 @@ from sys import argv
 {bindings}
 
 context.binary = {bin_name}
-context.terminal = ["kitty", "@", "new-window"]
+context.terminal = ["kitty", "@", "new-window", "--cwd", getcwd()]
 context.gdbinit = "/etc/profiles/per-user/darktar/share/pwndbg/gdbinit.py"
 
 r: process = None

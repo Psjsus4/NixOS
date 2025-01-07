@@ -216,6 +216,9 @@
     git
     tk
     firefox
+    (discord.override {
+      withVencord = true;
+    })
     ghidra
     burpsuite
     wireshark
@@ -225,6 +228,7 @@
       })
     )
     kitty
+    zed-editor
     vscode
     nixd
     zsh
