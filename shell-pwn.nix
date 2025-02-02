@@ -1,13 +1,8 @@
-{
-  pkgs ? import <nixpkgs> {},
-  pkgs-stable ? import <nixpkgs-stable> {},
-  ...
-}:
+{pkgs ? import <nixpkgs> {}, ...}:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     clang
     libgcc
-
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
@@ -15,11 +10,6 @@ pkgs.mkShellNoCC {
         docker
         ropper
         (callPackage (import ./pkgs/getlibs) {})
-      ]))
-
-    (pkgs-stable.python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        angr
       ]))
 
     (ruby_3_3.withPackages (ruby_3_3-pkgs:

@@ -3,6 +3,7 @@
 from pwn import *
 import pwn
 from sys import argv
+from os import getcwd
 
 {bindings}
 

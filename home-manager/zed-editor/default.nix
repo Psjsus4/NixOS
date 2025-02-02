@@ -67,7 +67,7 @@
       lsp = {
         rust-analyzer = {
           binary = {
-            #                        path = lib.getExe pkgs.rust-analyzer;
+            #path = lib.getExe pkgs.rust-analyzer;
             path_lookup = true;
           };
         };
@@ -82,6 +82,11 @@
           };
           settings = {
             dialyzerEnabled = true;
+          };
+        };
+        python = {
+          binary = {
+            path_lookup = true;
           };
         };
       };

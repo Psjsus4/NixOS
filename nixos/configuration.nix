@@ -56,11 +56,18 @@
       outputs.overlays.modifications
       outputs.overlays.stable
       inputs.nix-your-shell.overlays.default
+      #inputs.nur.overlays.default
     ];
+
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+      };
     };
   };
 
@@ -167,9 +174,9 @@
 
   hardware = {
     graphics.enable = true;
-    pulseaudio.enable = false;
   };
   security.rtkit.enable = true;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa = {
@@ -246,6 +253,7 @@
     FLAKE = "/home/darktar/.config/nixos/";
   };
 
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   # Stylix
   stylix = {
     enable = true;

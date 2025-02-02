@@ -4,7 +4,11 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+
+    # NUR
+    #nur.url = "github:nix-community/NUR";
+    #nur.inputs.nixpkgs.follows = "nixpkgs";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/";
@@ -12,7 +16,7 @@
 
     # Nix Stylix
     stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # nix your shell
     nix-your-shell.url = "github:MercuryTechnologies/nix-your-shell";
@@ -22,7 +26,8 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-stable,
+    #nixpkgs-stable,
+    #nur,
     #home-manager,
     ...
   } @ inputs: let
@@ -30,7 +35,7 @@
     # Supported systems for your flake packages, shell, etc.
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+    # pkgs-nur = nur.legacyPackages.${system};
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
   in {
@@ -54,16 +59,15 @@
       psjsus4 = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          # > Our main nixos configuration file <
           ./nixos/configuration.nix
         ];
       };
     };
 
     devShells.${system} = {
-      default = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
-      pwn = import ./shell-pwn.nix {inherit pkgs pkgs-stable;};
-      rev = import ./shell-rev.nix {inherit pkgs pkgs-stable;};
+      default = import ./shell-pwn.nix {inherit pkgs;};
+      pwn = import ./shell-pwn.nix {inherit pkgs;};
+      rev = import ./shell-rev.nix {inherit pkgs;};
       osint = import ./shell-osint.nix {inherit pkgs;};
       crypto = import ./shell-crypto.nix {inherit pkgs;};
       web = import ./shell-web.nix {inherit pkgs;};

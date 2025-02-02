@@ -1,12 +1,10 @@
-{
-  pkgs ? import <nixpkgs> {},
-  pkgs-stable ? import <nixpkgs-stable> {},
-  ...
-}:
+{pkgs ? import <nixpkgs> {}, ...}:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     clang
-    libgcc
+    gcc
+    glibc.dev
+    openssl.dev
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
@@ -16,12 +14,8 @@ pkgs.mkShellNoCC {
         #requests
       ]))
 
-    (pkgs-stable.python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        angr
-      ]))
     radare2
   ];
 
-  inputsFrom = with pkgs; [libgcc gef];
+  inputsFrom = with pkgs; [glibc gef openssl];
 }
