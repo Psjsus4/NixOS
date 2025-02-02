@@ -253,7 +253,6 @@
     FLAKE = "/home/darktar/.config/nixos/";
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   # Stylix
   stylix = {
     enable = true;
