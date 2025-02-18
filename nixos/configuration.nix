@@ -56,18 +56,12 @@
       outputs.overlays.modifications
       outputs.overlays.stable
       inputs.nix-your-shell.overlays.default
-      #inputs.nur.overlays.default
     ];
 
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
-      packageOverrides = pkgs: {
-        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-          inherit pkgs;
-        };
-      };
     };
   };
 
@@ -202,11 +196,14 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = {inherit inputs;};
     useUserPackages = true;
     useGlobalPkgs = true;
-    users = {
-      darktar = import ../home-manager/home.nix;
+    users.darktar = {
+      imports = [
+        #inputs.stylix.homeManagerModules.stylix
+        ../home-manager/home.nix
+      ];
     };
   };
 
@@ -221,6 +218,7 @@
     nvd
     neovim
     git
+    binutils
     tk
     firefox
     (discord.override {
@@ -237,6 +235,7 @@
     kitty
     zed-editor
     vscode
+    obsidian
     nixd
     zsh
     nix-your-shell

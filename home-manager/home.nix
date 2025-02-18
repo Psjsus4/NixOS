@@ -8,6 +8,7 @@
     ./browser/firefox.nix
     ./zsh
     ./wayland
+    ./zed-editor
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -24,7 +25,7 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -35,8 +36,8 @@
     pwninit
     patchelf
     gdb
-    pwndbg
-    gef
+    #pwndbg
+    #gef
     eza
     bat
     cascadia-code
@@ -107,20 +108,35 @@
     home-manager.enable = true;
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-
   stylix = {
     enable = true;
     autoEnable = false;
-    targets.kitty.enable = true;
-    targets.vscode.enable = true;
-    targets.neovim.enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-    polarity = "dark";
-    fonts.sizes = {
-      terminal = 13;
-      applications = 11;
+    targets = {
+      zed.enable = true;
+      gtk.enable = true;
+      kitty.enable = true;
+      gnome-text-editor.enable = true;
+      gnome.enable = true;
+      fzf.enable = true;
+      firefox.firefoxGnomeTheme.enable = true;
     };
+    image = ../nixos/dark-nature-sunset.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    cursor = {
+      package = pkgs.phinger-cursors;
+      name = "phinger-cursors-dark";
+    };
+    fonts = {
+      emoji = {
+        package = pkgs.cascadia-code;
+        name = "Cascadia Code NF";
+      };
+      sizes = {
+        terminal = 13;
+        applications = 11;
+      };
+    };
+    polarity = "dark";
     opacity.terminal = 0.9;
     opacity.applications = 0.9;
   };

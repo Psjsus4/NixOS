@@ -16,11 +16,15 @@
 
     # Nix Stylix
     stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs-stable";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     # nix your shell
     nix-your-shell.url = "github:MercuryTechnologies/nix-your-shell";
     nix-your-shell.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Pwndbg
+    pwndbg.url = "github:pwndbg/pwndbg";
+    pwndbg.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -65,8 +69,14 @@
     };
 
     devShells.${system} = {
-      default = import ./shell-pwn.nix {inherit pkgs;};
-      pwn = import ./shell-pwn.nix {inherit pkgs;};
+      default = import ./shell-pwn.nix {
+        inherit pkgs;
+        pwndbg = inputs.pwndbg.packages.${system}.default;
+      };
+      pwn = import ./shell-pwn.nix {
+        inherit pkgs;
+        pwndbg = inputs.pwndbg.packages.${system}.default;
+      };
       rev = import ./shell-rev.nix {inherit pkgs;};
       osint = import ./shell-osint.nix {inherit pkgs;};
       crypto = import ./shell-crypto.nix {inherit pkgs;};

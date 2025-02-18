@@ -23,6 +23,10 @@ s = lambda a: r.send(a)
 recv = lambda: r.recv()
 recvn = lambda a: r.recvn(a)
 recvu = lambda a, b=False: r.recvuntil(a, b)
+clean = lambda: r.clean()
+success = lambda a: log.success(a)
+fail = lambda a: log.failure(a)
+info = lambda a: log.info(a)
 
 gdbscript = '''
     b main

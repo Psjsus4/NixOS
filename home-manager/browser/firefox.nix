@@ -21,8 +21,8 @@
         };
       };
 
-      extensions = with pkgs; [
-        #  ublock-origin
+      extensions.packages = with pkgs; [
+        #ublock-origin
         browserpass
       ];
 

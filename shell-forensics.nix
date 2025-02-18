@@ -4,7 +4,6 @@ pkgs.mkShellNoCC {
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pyshark
-        binwalk-full
       ]))
 
     tshark

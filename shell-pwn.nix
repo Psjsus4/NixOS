@@ -1,4 +1,8 @@
-{pkgs ? import <nixpkgs> {}, ...}:
+{
+  pkgs ? import <nixpkgs> {},
+  pwndbg,
+  ...
+}:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     clang
@@ -6,9 +10,9 @@ pkgs.mkShellNoCC {
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
-        pwndbg
         docker
         ropper
+        pwndbg
         (callPackage (import ./pkgs/getlibs) {})
       ]))
 
