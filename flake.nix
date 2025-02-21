@@ -62,7 +62,7 @@
     nixosConfigurations = {
       # FIXME replace with your hostname
       psjsus4 = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs pwndbg;};
         modules = [
           ./nixos/configuration.nix
         ];

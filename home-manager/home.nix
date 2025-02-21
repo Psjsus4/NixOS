@@ -1,6 +1,7 @@
 {
   #config,
   pkgs,
+  pwndbg,
   #lib,
   ...
 }: {
@@ -36,7 +37,7 @@
     pwninit
     patchelf
     gdb
-    #pwndbg
+    pwndbg
     #gef
     eza
     bat

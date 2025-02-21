@@ -7,6 +7,7 @@
   lib,
   config,
   pkgs,
+  pwndbg,
   ...
 }: {
   imports = [
@@ -196,7 +197,10 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {
+      inherit inputs;
+      pwndbg = pwndbg;
+    };
     useUserPackages = true;
     useGlobalPkgs = true;
     users.darktar = {
