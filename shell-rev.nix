@@ -13,7 +13,7 @@ pkgs.mkShellNoCC {
         #pandas
         #requests
       ]))
-
+    cutter
     radare2
   ];
 

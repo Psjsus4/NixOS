@@ -219,12 +219,14 @@
     neovim
     git
     binutils
+    ltrace
     tk
     firefox
     (discord.override {
       withVencord = true;
     })
-    ghidra
+    stable.ghidra
+    ida-free
     burpsuite
     wireshark
     (

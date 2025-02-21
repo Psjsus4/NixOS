@@ -7,12 +7,13 @@ pkgs.mkShellNoCC {
   packages = with pkgs; [
     clang
     libgcc
+    pwndbg
+    one_gadget
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pwntools
         docker
         ropper
-        pwndbg
         (callPackage (import ./pkgs/getlibs) {})
       ]))
 
@@ -22,6 +23,7 @@ pkgs.mkShellNoCC {
       ]))
 
     radare2
+    cutter
 
     aflplusplus
   ];

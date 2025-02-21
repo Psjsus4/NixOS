@@ -8,7 +8,8 @@ pkgs.mkShellNoCC {
 
     tshark
     dislocker
+    tcpdump
   ];
 
-  inputsFrom = with pkgs; [wireshark]; #[something];
+  inputsFrom = with pkgs; [wireshark tcpdump]; #[something];
 }

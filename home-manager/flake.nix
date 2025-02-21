@@ -15,10 +15,6 @@
     # Stylix
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Pwndbg
-    pwndbg.url = "github:pwndbg/pwndbg";
-    pwndbg.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

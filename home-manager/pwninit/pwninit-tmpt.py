@@ -4,6 +4,9 @@ from pwn import *
 import pwn
 from sys import argv
 from os import getcwd
+from time import sleep
+
+speed = 0#.5
 
 {bindings}
 
@@ -18,11 +21,11 @@ u32 = lambda d: pwn.u32(d.ljust(4, b"\0")[:4])
 u16 = lambda d: pwn.u16(d.ljust(2, b"\0")[:2])
 sla = lambda a, b: r.sendlineafter(a, b)
 sa = lambda a, b: r.sendafter(a, b)
-sl = lambda a: r.sendline(a)
-s = lambda a: r.send(a)
-recv = lambda: r.recv()
-recvn = lambda a: r.recvn(a)
-recvu = lambda a, b=False: r.recvuntil(a, b)
+sl = lambda a: (sleep(speed), r.sendline(a))
+s = lambda a: (sleep(speed), r.send(a))
+recv = lambda: (sleep(speed), r.recv())[1]
+recvn = lambda a: (sleep(speed), r.recvn(a))[1]
+recvu = lambda a, b=False: (sleep(speed), r.recvuntil(a, b))[1]
 clean = lambda: r.clean()
 success = lambda a: log.success(a)
 fail = lambda a: log.failure(a)

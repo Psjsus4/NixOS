@@ -3,16 +3,10 @@ pkgs.mkShellNoCC {
   packages = with pkgs; [
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
-        pwntools
-        pycryptodome
-        gmpy2
-        #pandas
+        pillow
         #requests
       ]))
-    sage
-    #john
-    crunch
   ];
 
-  inputsFrom = with pkgs; [john crunch sage];
+  inputsFrom = with pkgs; []; #[something];
 }

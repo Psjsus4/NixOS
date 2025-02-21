@@ -39,6 +39,7 @@
     # Supported systems for your flake packages, shell, etc.
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    pwndbg = inputs.pwndbg.packages.${system}.default;
     # pkgs-nur = nur.legacyPackages.${system};
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
@@ -70,12 +71,10 @@
 
     devShells.${system} = {
       default = import ./shell-pwn.nix {
-        inherit pkgs;
-        pwndbg = inputs.pwndbg.packages.${system}.default;
+        inherit pkgs pwndbg;
       };
       pwn = import ./shell-pwn.nix {
-        inherit pkgs;
-        pwndbg = inputs.pwndbg.packages.${system}.default;
+        inherit pkgs pwndbg;
       };
       rev = import ./shell-rev.nix {inherit pkgs;};
       osint = import ./shell-osint.nix {inherit pkgs;};
