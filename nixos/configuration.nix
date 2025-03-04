@@ -219,6 +219,7 @@
   environment.systemPackages = with pkgs; [
     nh
     nix-output-monitor
+    nixpkgs-review
     nvd
     neovim
     git
@@ -229,7 +230,7 @@
     (discord.override {
       withVencord = true;
     })
-    stable.ghidra
+    ghidra
     ida-free
     burpsuite
     wireshark

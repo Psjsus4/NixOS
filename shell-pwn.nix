@@ -13,13 +13,15 @@ pkgs.mkShellNoCC {
       with python-pkgs; [
         pwntools
         docker
+        #angr
         ropper
         (callPackage (import ./pkgs/getlibs) {})
       ]))
 
-    (ruby_3_3.withPackages (ruby_3_3-pkgs:
-      with ruby_3_3-pkgs; [
+    (ruby.withPackages (ruby-pkgs:
+      with ruby-pkgs; [
         seccomp-tools
+        timeout
       ]))
 
     radare2

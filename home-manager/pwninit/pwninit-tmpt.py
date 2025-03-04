@@ -25,7 +25,7 @@ sl = lambda a: (sleep(speed), r.sendline(a))
 s = lambda a: (sleep(speed), r.send(a))
 recv = lambda: (sleep(speed), r.recv())[1]
 recvn = lambda a: (sleep(speed), r.recvn(a))[1]
-recvu = lambda a, b=False: (sleep(speed), r.recvuntil(a, b))[1]
+recvu = lambda a, b=True: (sleep(speed), r.recvuntil(a, b))[1]
 clean = lambda: r.clean()
 success = lambda a: log.success(a)
 fail = lambda a: log.failure(a)

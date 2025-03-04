@@ -38,7 +38,10 @@
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     pwndbg = inputs.pwndbg.packages.${system}.default;
     # pkgs-nur = nur.legacyPackages.${system};
     # This is a function that generates an attribute by calling a function you
