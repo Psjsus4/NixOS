@@ -8,7 +8,7 @@
   imports = [
     ./browser/firefox.nix
     ./zsh
-    ./wayland
+    #./wayland
     ./zed-editor
   ];
 
