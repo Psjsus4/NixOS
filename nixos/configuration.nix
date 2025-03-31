@@ -267,6 +267,7 @@
     cursor = {
       package = pkgs.phinger-cursors;
       name = "phinger-cursors-dark";
+      size = 10;
     };
     fonts = {
       emoji = {

@@ -85,6 +85,7 @@
       web = import ./shell-web.nix {inherit pkgs;};
       forensics = import ./shell-forensics.nix {inherit pkgs;};
       blockchain = import ./shell-blockchain.nix {inherit pkgs;};
+      misc = import ./shell-misc.nix {inherit pkgs;};
     };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'

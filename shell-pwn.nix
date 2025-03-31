@@ -2,33 +2,41 @@
   pkgs ? import <nixpkgs> {},
   pwndbg,
   ...
-}:
-pkgs.mkShellNoCC {
-  packages = with pkgs; [
-    clang
-    libgcc
-    pwndbg
-    one_gadget
-    (python3.withPackages (python-pkgs:
-      with python-pkgs; [
-        pwntools
-        docker
-        #angr
-        ropper
-        (callPackage (import ./pkgs/getlibs) {})
-      ]))
+}: let
+  # Create a custom Python environment with unicorn-angr override
+  customPython = pkgs.python3.override {
+    packageOverrides = self: super: {
+      # Replace standard unicorn with unicorn-angr
+      unicorn = super.unicorn-angr;
+    };
+  };
+in
+  pkgs.mkShell {
+    packages = with pkgs; [
+      libgcc
+      pwndbg
+      one_gadget
 
-    (ruby.withPackages (ruby-pkgs:
-      with ruby-pkgs; [
-        seccomp-tools
-        timeout
-      ]))
+      (customPython.withPackages (python-pkgs:
+        with python-pkgs; [
+          pwntools
+          docker
+          angr
+          ropper
+          (callPackage (import ./pkgs/getlibs) {})
+        ]))
 
-    radare2
-    cutter
+      (ruby.withPackages (ruby-pkgs:
+        with ruby-pkgs; [
+          seccomp-tools
+          timeout
+        ]))
 
-    aflplusplus
-  ];
+      radare2
+      cutter
 
-  inputsFrom = with pkgs; [libgcc pwndbg aflplusplus qemu unicorn gnumake];
-}
+      aflplusplus
+    ];
+
+    inputsFrom = with pkgs; [libgcc qemu gnumake];
+  }
