@@ -227,6 +227,8 @@
     ltrace
     tk
     firefox
+    wireguard-tools
+    #discord
     (discord.override {
       withVencord = true;
     })
@@ -252,11 +254,12 @@
     swww
     wofi
     #rofi-wayland
-    #  wget
+    #wget
   ];
 
   environment.sessionVariables = {
     FLAKE = "/home/darktar/.config/nixos/";
+    NH_FLAKE = "/home/darktar/.config/nixos/";
   };
 
   # Stylix

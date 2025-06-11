@@ -13,6 +13,8 @@
 in
   pkgs.mkShell {
     packages = with pkgs; [
+      qemu
+
       libgcc
       pwndbg
       one_gadget
@@ -24,13 +26,10 @@ in
           angr
           ropper
           (callPackage (import ./pkgs/getlibs) {})
+          #python-lsp-server
         ]))
 
-      (ruby.withPackages (ruby-pkgs:
-        with ruby-pkgs; [
-          seccomp-tools
-          timeout
-        ]))
+      rubyPackages_3_4.seccomp-tools
 
       radare2
       cutter

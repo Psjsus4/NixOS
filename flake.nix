@@ -4,7 +4,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # NUR
     #nur.url = "github:nix-community/NUR";
@@ -42,6 +42,7 @@
       inherit system;
       config.allowUnfree = true;
     };
+    avrPkgs = pkgs.pkgsCross.avr;
     pwndbg = inputs.pwndbg.packages.${system}.default;
     # pkgs-nur = nur.legacyPackages.${system};
     # This is a function that generates an attribute by calling a function you
@@ -73,19 +74,25 @@
     };
 
     devShells.${system} = {
-      default = import ./shell-pwn.nix {
-        inherit pkgs pwndbg;
-      };
-      pwn = import ./shell-pwn.nix {
-        inherit pkgs pwndbg;
-      };
+      default = import ./shell-pwn.nix {inherit pkgs pwndbg;};
+      pwn = import ./shell-pwn.nix {inherit pkgs pwndbg;};
       rev = import ./shell-rev.nix {inherit pkgs;};
       osint = import ./shell-osint.nix {inherit pkgs;};
       crypto = import ./shell-crypto.nix {inherit pkgs;};
       web = import ./shell-web.nix {inherit pkgs;};
-      forensics = import ./shell-forensics.nix {inherit pkgs;};
-      blockchain = import ./shell-blockchain.nix {inherit pkgs;};
+      for = import ./shell-forensics.nix {inherit pkgs;};
+      block = import ./shell-blockchain.nix {inherit pkgs;};
       misc = import ./shell-misc.nix {inherit pkgs;};
+      pro = import ./shell-programming.nix {inherit pkgs pwndbg;};
+      hard = import ./shell-hardware.nix {inherit pkgs pwndbg avrPkgs;};
+
+      #avrPkgs.mkShell {
+      #  name = "avr-dev";
+      #  packages = with pkgs; [
+      #    avrdude # Host tool for flashing
+      #    arduino-cli # Optional
+      #  ];
+      #};
     };
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
