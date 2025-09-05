@@ -24,6 +24,4 @@ in
       cutter
       radare2
     ];
-
-    inputsFrom = with pkgs; [glibc openssl];
   }

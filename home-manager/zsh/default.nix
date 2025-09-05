@@ -22,7 +22,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    initExtra = ''
+    initContent = ''
       bindkey "^[[1;3C" forward-word                  # Key Alt + Right
       bindkey "^[[1;3D" backward-word                 # Key Alt + Left
       bindkey "^H" backward-kill-word                 # Key Ctrl + H

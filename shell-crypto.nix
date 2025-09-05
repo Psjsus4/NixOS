@@ -13,6 +13,4 @@ pkgs.mkShellNoCC {
     #john
     crunch
   ];
-
-  inputsFrom = with pkgs; [john crunch sage];
 }

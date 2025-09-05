@@ -14,6 +14,4 @@ pkgs.mkShellNoCC {
     commix
     sqlmap
   ];
-
-  inputsFrom = with pkgs; [ngrok sqlmap]; #[something];
 }

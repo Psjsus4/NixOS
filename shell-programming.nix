@@ -21,6 +21,4 @@ in
           docker
         ]))
     ];
-
-    inputsFrom = with pkgs; [libgcc qemu gnumake sbcl nodejs];
   }

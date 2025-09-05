@@ -12,7 +12,7 @@ speed = 0#.5
 
 context.binary = {bin_name}
 context.terminal = ["kitty", "@", "new-window", "--cwd", getcwd()]
-context.gdbinit = "/etc/profiles/per-user/darktar/share/pwndbg/gdbinit.py"
+context.gdb_binary = "pwndbg"
 
 r: process = None
 

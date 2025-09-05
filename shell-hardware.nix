@@ -20,6 +20,4 @@ in
           docker
         ]))
     ];
-
-    inputsFrom = with pkgs; [libgcc qemu gnumake arduino-core];
   }

@@ -10,6 +10,4 @@ pkgs.mkShellNoCC {
     dislocker
     tcpdump
   ];
-
-  inputsFrom = with pkgs; [wireshark tcpdump]; #[something];
 }

@@ -4,6 +4,4 @@ pkgs.mkShellNoCC {
     checkpwn
     h8mail
   ];
-
-  #inputsFrom = with pkgs; []; #[something];
 }

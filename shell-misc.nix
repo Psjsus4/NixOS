@@ -10,6 +10,4 @@ pkgs.mkShellNoCC {
         #requests
       ]))
   ];
-
-  inputsFrom = with pkgs; []; #[something];
 }
