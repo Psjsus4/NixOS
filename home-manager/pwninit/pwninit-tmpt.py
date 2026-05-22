@@ -11,8 +11,7 @@ speed = 0#.5
 {bindings}
 
 context.binary = {bin_name}
-context.terminal = ["kitty", "@", "new-window", "--cwd", getcwd()]
-context.gdb_binary = "pwndbg"
+context.terminal = ["kitty", "@", "launch", "--type", "os-window", "--keep-focus", "--cwd", "current"]
 
 r: process = None
 
